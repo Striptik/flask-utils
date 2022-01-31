@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.cache
+vendor/
+*.log
+.vscode
+.coverage
+coverage/
+.idea
+.env*
+.env.bak
+.DS_Store
+.python-version
+
