@@ -1,7 +1,7 @@
 from flask import jsonify
 from werkzeug.exceptions import FailedDependency, HTTPException, NotFound
 
-from models import ErrorTypeEnum
+from models.enum import ErrorTypeEnum
 
 from .console import log
 from .logger import log_error, log_exception
