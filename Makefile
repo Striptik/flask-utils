@@ -7,10 +7,10 @@ format.black:
 	python3 -m black ./src ./test --exclude vendor/
 
 format.isort:
-	python3 -m isort -rc ./src  ./test --skip vendor/ --skip ./models/__init__.py
+	python3 -m isort -rc ./src  ./test --skip vendor/
 
 test.lint: ## Lint python files with flake8
-	python3 -m flake8 ./models ./test
+	python3 -m flake8 ./src ./test
 
 
 .PHONY: test

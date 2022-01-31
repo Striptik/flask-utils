@@ -1,10 +1,16 @@
+import enum as _enum
 from flask import jsonify
 from werkzeug.exceptions import FailedDependency, HTTPException, NotFound
 
-from models.enum import ErrorTypeEnum
-
 from .console import log
 from .logger import log_error, log_exception
+
+
+class ErrorTypeEnum(str, _enum.Enum):
+    SERVER = "server"
+    INTEGRITY = "integrity"
+    BODY_VALIDATION = "body validation"
+    SCHEMA_VALIDATION = "schema validation"
 
 
 def handle_server_error(error, error_type):
