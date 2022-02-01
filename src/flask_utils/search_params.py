@@ -45,3 +45,9 @@ def get_list_marshal_with(api, key: str, entity_fields):
             key: fields.List(fields.Nested(entity_fields, skip_none=True)),
         },
     )
+
+
+def parse_int_list(list_string):
+    if list_string == "":
+        return []
+    return [int(item) for item in list_string.split(",")]
