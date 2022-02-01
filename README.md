@@ -34,7 +34,7 @@ $ make format
 
 ## Build package
 
-Run this command before commit
+Run this command and increase version in setup.cfg before commit
 
 ```bash
 pip uninstall -y flask_utils && pip install -v .
