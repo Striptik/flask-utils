@@ -31,3 +31,11 @@ The code is formatted using [Black](https://github.com/python/black) and [Isort]
 ```bash
 $ make format
 ```
+
+## Build package
+
+Run this command before commit
+
+```bash
+pip uninstall -y flask_utils && pip install -v .
+```
