@@ -1,8 +1,9 @@
 ## Table of Contents
 
 1. [Testing](#testing)
-1. [Lint](#lint)
-1. [Format](#format)
+2. [Lint](#lint)
+3. [Format](#format)
+4. [Build Package](#build-package)
 
 ## Testing
 
@@ -34,7 +35,7 @@ $ make format
 
 ## Build package
 
-Run this command and increase version in setup.cfg before commit
+On your feature-branch, increase version in setup.cfg and run this command before commit
 
 ```bash
 pip uninstall -y flask_utils && pip install -v .

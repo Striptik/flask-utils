@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from flask_restx import fields, inputs
 
 
@@ -51,3 +53,17 @@ def parse_int_list(list_string):
     if list_string == "":
         return []
     return [int(item) for item in list_string.split(",")]
+
+
+def parse_dates_params(request, start_delta=0, end_delta=0):
+    start_date = request.args.get(
+        "startDate",
+        type=inputs.datetime_from_iso8601,
+        default=datetime.now() - timedelta(days=start_delta),
+    )
+    end_date = request.args.get(
+        "endDate",
+        type=inputs.datetime_from_iso8601,
+        default=datetime.now() + timedelta(days=end_delta),
+    )
+    return [start_date, end_date]
