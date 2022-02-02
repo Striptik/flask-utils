@@ -40,3 +40,11 @@ On your feature-branch, increase version in setup.cfg and run this command befor
 ```bash
 pip uninstall -y flask_utils && pip install -v .
 ```
+
+After pushing the branch, you can set a tag and push it, where the tag corresponds to the new version
+```bash
+$ git tag -a vX.X.X -m "Version message"
+$ git push origin vX.X.X
+```
+
+Finally, create a release on github (Code > Release> Draft a new Release) with the new tag, publish it, and merge the pull request
