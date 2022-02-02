@@ -32,8 +32,10 @@ class GenericResourceClass:
         )
         return None, 204
 
-    def update(self, entity_id, validator=None):
+    def update(self, entity_id, validator=None, **kwargs):
         entity_json = request.get_json()
+        for key, value in kwargs.items():
+            entity_json[key] = value
         updated_entity = self.schema.load(entity_json)
         existing_entity = self.repository.get(entity_id)
         handle_not_found(existing_entity, self.name, entity_id)
