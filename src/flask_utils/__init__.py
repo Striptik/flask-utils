@@ -5,9 +5,10 @@ from .resource import GenericResourceClass, handle_not_found
 from .search_params import (
     format_search_term,
     get_expected_search_params,
-    parse_search_params,
+    get_list_marshal_with,
     parse_dates_params,
     parse_int_list,
+    parse_search_params,
 )
 
 __all__ = (
@@ -27,8 +28,8 @@ __all__ = (
     "GenericResourceClass",
     "format_search_term",
     "get_expected_search_params",
+    "get_list_marshal_with",
     "parse_search_params",
     "parse_dates_params",
     "parse_int_list",
-
 )

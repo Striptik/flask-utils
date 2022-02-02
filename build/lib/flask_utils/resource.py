@@ -23,9 +23,11 @@ class GenericResourceClass:
         handle_not_found(entity, self.name, entity_id)
         return self.schema.dump(entity)
 
-    def delete(self, entity_id):
+    def delete(self, entity_id, validator=None):
         entity = self.repository.get(entity_id)
         handle_not_found(entity, self.name, entity_id)
+        if validator is not None:
+            validator.validate(entity)
         self.repository.delete(entity_id)
         self.log_entity_change(
             entity_id, getattr(entity, self.entity_name_key, ""), entity, "deleted"
@@ -41,7 +43,7 @@ class GenericResourceClass:
         handle_not_found(existing_entity, self.name, entity_id)
         updated_entity.updated_at = datetime.now()
         if validator is not None:
-            validator.validate(updated_entity)
+            validator.validate(updated_entity, existing_entity)
         self.repository.update(entity_id, updated_entity)
         self.log_entity_change(
             entity_id,
