@@ -35,16 +35,18 @@ $ make format
 
 ## Build package
 
-On your feature-branch, increase version in setup.cfg and run this command before commit
+Once your're good with the updates, on your feature-branch:
 
+1. Increase version in setup.cfg
+2. Format, test and lint
+3. Create a new version with this command:
 ```bash
 pip uninstall -y flask_utils && pip install -v .
 ```
-
-After pushing the branch, you can set a tag and push it, where the tag corresponds to the new version
+4. Add, commit, and Push your changes
+5. Then run this this command to tag your commit, where the tag corresponds to the new version
 ```bash
 $ git tag -a vX.X.X -m "Version message"
 $ git push origin vX.X.X
 ```
-
-Finally, create a release on github (Code > Release> Draft a new Release) with the new tag, publish it, and merge the pull request
+6. Finally, create a release on github (Code > Release> Draft a new Release) with the new tag, publish it, and merge the pull request
