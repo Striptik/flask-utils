@@ -1,6 +1,7 @@
 import enum as _enum
 from flask import jsonify
 from werkzeug.exceptions import FailedDependency, HTTPException, NotFound
+from flask import abort
 
 from .console import log
 from .logger import log_error, log_exception
@@ -34,9 +35,9 @@ def handle_server_error(error, error_type):
         return jsonify(error="Internal Error - {}".format(str(error))), code
 
 
-def reply_error(message: str, metas={}):
+def handle_error(message, metas={}, code=400):
     log_error(message, metas)
-    raise FailedDependency(message)
+    abort(code, message)
 
 
 def handle_not_found(entity, entity_name, entity_id):
