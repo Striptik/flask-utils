@@ -8,7 +8,6 @@ src/flask_utils/console.py
 src/flask_utils/datadog_http_handler.py
 src/flask_utils/date.py
 src/flask_utils/error_handler.py
-src/flask_utils/json.py
 src/flask_utils/logger.py
 src/flask_utils/repository.py
 src/flask_utils/resource.py
