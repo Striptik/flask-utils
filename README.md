@@ -44,7 +44,7 @@ Once your're good with the updates, on your feature-branch:
 pip uninstall -y flask_utils && pip install -v .
 ```
 4. Add, commit, and Push your changes
-5. Then run this this command to tag your commit, where the tag corresponds to the new version
+5. Then run this command to tag your commit, where the tag corresponds to the new version
 ```bash
 $ git tag -a vX.X.X -m "Version message"
 $ git push origin vX.X.X
