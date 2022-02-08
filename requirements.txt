@@ -18,3 +18,4 @@ importlib-resources==5.4.0
 importlib-metadata==4.8.2
 typing-extensions==4.0.0
 glom==20.11.0
+SQLAlchemy==1.4.12
