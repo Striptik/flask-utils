@@ -10,8 +10,10 @@ from sqlalchemy.orm import aliased
 from sqlalchemy.orm.collections import CollectionAdapter
 from weakref import WeakValueDictionary
 
+db = SQLAlchemy()
 
-class MetaBaseModel(SQLAlchemy().Model.__class__):
+
+class MetaBaseModel(db.Model.__class__):
     """Define a metaclass for the BaseModel
     Implement `__getitem__` for managing aliases"""
 
@@ -100,3 +102,12 @@ class BaseModel:
             column.key: getattr(self, column.key)
             for column in inspect(self.__class__).attrs
         }
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        return self
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
