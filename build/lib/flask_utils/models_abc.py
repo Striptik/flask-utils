@@ -33,7 +33,8 @@ class MetaBaseModel(db.Model.__class__):
 def get_value(value):
     try:
         class_dict = value.__dict__
-        class_dict.pop("_sa_instance_state", None)
+        if "_sa_instance_state" in class_dict:
+            class_dict.pop("_sa_instance_state", None)
         return class_dict
     except Exception:
         return value if not isinstance(value, datetime) else value.strftime("%d/%m/%Y")
