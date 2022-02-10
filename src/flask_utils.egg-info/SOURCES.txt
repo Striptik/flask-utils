@@ -10,6 +10,7 @@ src/flask_utils/date.py
 src/flask_utils/error_handler.py
 src/flask_utils/logger.py
 src/flask_utils/models_abc.py
+src/flask_utils/ms_request.py
 src/flask_utils/repository.py
 src/flask_utils/resource.py
 src/flask_utils/search_params.py

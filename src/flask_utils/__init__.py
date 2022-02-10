@@ -1,5 +1,6 @@
 from .cache import redis_client
 from .error_handler import handle_server_error
+from .ms_request import get_entity, get_entities
 from .repository import get_search_result
 from .resource import GenericResourceClass, handle_not_found
 from .search_params import (
@@ -32,4 +33,7 @@ __all__ = (
     "parse_search_params",
     "parse_dates_params",
     "parse_int_list",
+    "ms_request",
+    "get_entity",
+    "get_entities"
 )
