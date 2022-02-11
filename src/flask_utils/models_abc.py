@@ -32,7 +32,7 @@ class MetaBaseModel(db.Model.__class__):
 
 def get_value(value):
     try:
-        class_dict = value.__dict__
+        class_dict = getattr(value, "___dict___", {})
         class_dict.pop(key="_sa_instance_state", default="")
         return class_dict
     except Exception:
@@ -45,7 +45,7 @@ def json_default(value):
     elif isinstance(value, CollectionAdapter):
         return []
     else:
-        return value.__dict__
+        return getattr(value, "___dict___", {})
 
 
 class BaseModel:
