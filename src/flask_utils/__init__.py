@@ -38,4 +38,10 @@ __all__ = (
     "ms_request",
     "get_entity",
     "get_entities",
+    "pdf",
+    "remove_files",
+    "generate_pdf",
+    "s3",
+    "upload_file",
+    "download_file",
 )
