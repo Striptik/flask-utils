@@ -20,8 +20,7 @@ def get_entity(host, _id: int, path, name):
         return False
 
 
-def get_entities(host, entities, id_key, result_key, path, name):
-    ids = ",".join(str(getattr(entity, id_key)) for entity in entities)
+def list_from_ids(host, ids, result_key, path, name):
     try:
         response = requests.get(f"{host}/api/{path}?ids={ids}")
         response_json = response.content.decode("utf-8")
@@ -34,3 +33,8 @@ def get_entities(host, entities, id_key, result_key, path, name):
     except Exception as e:
         logger.log_exception(e, {"ids": ids})
         return []
+
+
+def get_entities(host, entities, id_key, result_key, path, name):
+    ids = ",".join(str(getattr(entity, id_key)) for entity in entities)
+    return list_from_ids(host, ids, result_key, path, name)
