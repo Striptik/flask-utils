@@ -1,6 +1,6 @@
 from .cache import redis_client
 from .error_handler import handle_server_error
-from .ms_request import get_entities, get_entity
+from .ms_request import get_entities, get_entity, list_from_ids
 from .repository import get_search_result
 from .resource import GenericResourceClass, handle_not_found
 from .search_params import (
@@ -38,6 +38,7 @@ __all__ = (
     "ms_request",
     "get_entity",
     "get_entities",
+    "list_from_ids",
     "pdf",
     "remove_files",
     "generate_pdf",
