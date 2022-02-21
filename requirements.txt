@@ -3,10 +3,9 @@ pip==22.0.2
 flask-restx==0.5.1
 Flask-Script==2.0.6
 Flask==1.1.2
-Jinja2==2.11.3
 Werkzeug==0.16.1
 psycopg2-binary==2.9.1
-pytz==2021.1
+pytz==2021.3
 setproctitle==1.2.2
 six==1.15.0
 requests==2.25.1
@@ -20,3 +19,5 @@ importlib-metadata==4.8.2
 typing-extensions==4.0.0
 glom==20.11.0
 SQLAlchemy==1.4.12
+jinja2==3.0.3
+pdfkit==1.0.0

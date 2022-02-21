@@ -11,8 +11,10 @@ src/flask_utils/error_handler.py
 src/flask_utils/logger.py
 src/flask_utils/models_abc.py
 src/flask_utils/ms_request.py
+src/flask_utils/pdf.py
 src/flask_utils/repository.py
 src/flask_utils/resource.py
+src/flask_utils/s3.py
 src/flask_utils/search_params.py
 src/flask_utils.egg-info/PKG-INFO
 src/flask_utils.egg-info/SOURCES.txt

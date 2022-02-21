@@ -29,7 +29,6 @@ class MetaBaseModel(db.Model.__class__):
 
 
 class BaseModel:
-
     def __repr__(self):
         return self.repr()
 
@@ -48,9 +47,12 @@ class BaseModel:
         }
 
     def todict(self):
-        excl = ('_sa_adapter', '_sa_instance_state')
-        return {k: v for k, v in vars(self).items() if not k.startswith('_') and
-                not any(hasattr(v, a) for a in excl)}
+        excl = ("_sa_adapter", "_sa_instance_state")
+        return {
+            k: v
+            for k, v in vars(self).items()
+            if not k.startswith("_") and not any(hasattr(v, a) for a in excl)
+        }
 
     def save(self):
         db.session.add(self)
