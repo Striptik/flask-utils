@@ -55,6 +55,12 @@ def parse_int_list(list_string):
     return [int(item) for item in list_string.split(",")]
 
 
+def parse_string_list(list_string):
+    if list_string == "":
+        return []
+    return [item for item in list_string.split(",")]
+
+
 def parse_dates_params(request, start_delta=0, end_delta=0):
     start_date = request.args.get(
         "startDate",
