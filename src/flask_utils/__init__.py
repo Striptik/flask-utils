@@ -1,18 +1,20 @@
 from .cache import redis_client
-from .error_handler import handle_server_error
-from .ms_request import get_entities, get_entity
+from .error_handler import handle_server_error, handle_not_found, handle_error
+from .ms_request import get_entities, get_entity, list_from_ids
 from .repository import get_search_result
-from .resource import GenericResourceClass, handle_not_found
+from .resource import GenericResourceClass
 from .search_params import (
     format_search_term,
     get_expected_search_params,
     get_list_marshal_with,
     parse_dates_params,
     parse_int_list,
+    parse_string_list,
     parse_search_params,
 )
 from .pdf import remove_files, generate_pdf
 from .s3 import upload_file, download_file
+from .schema import NullableString
 
 __all__ = (
     "cache",
@@ -27,6 +29,7 @@ __all__ = (
     "redis_client",
     "handle_server_error",
     "handle_not_found",
+    "handle_error",
     "get_search_result",
     "GenericResourceClass",
     "format_search_term",
@@ -35,13 +38,17 @@ __all__ = (
     "parse_search_params",
     "parse_dates_params",
     "parse_int_list",
+    "parse_string_list",
     "ms_request",
     "get_entity",
     "get_entities",
+    "list_from_ids",
     "pdf",
     "remove_files",
     "generate_pdf",
     "s3",
     "upload_file",
     "download_file",
+    "schema",
+    "NullableString"
 )
