@@ -14,6 +14,7 @@ from .search_params import (
 )
 from .pdf import remove_files, generate_pdf
 from .s3 import upload_file, download_file
+from .schema import NullableString
 
 __all__ = (
     "cache",
@@ -48,4 +49,6 @@ __all__ = (
     "s3",
     "upload_file",
     "download_file",
+    "schema",
+    "NullableString"
 )
