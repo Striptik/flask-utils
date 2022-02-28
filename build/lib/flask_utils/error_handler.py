@@ -4,6 +4,7 @@ from werkzeug.exceptions import HTTPException, NotFound
 
 from .console import log
 from .logger import log_error, log_exception
+from .i18n import translate
 
 
 class ErrorTypeEnum(str, _enum.Enum):
@@ -35,8 +36,9 @@ def handle_server_error(error, error_type):
 
 
 def handle_error(message, metas={}, code=400):
-    log_error(message, metas)
-    abort(code, message)
+    translated_message = translate(message)
+    log_error(translated_message, metas)
+    abort(code, translated_message)
 
 
 def handle_not_found(entity, entity_name, entity_id):
