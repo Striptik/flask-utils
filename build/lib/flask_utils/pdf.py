@@ -8,6 +8,10 @@ import config
 from flask import url_for
 
 
+def price(value):
+    return "{}€".format(round(value/100, 2))
+
+
 def generate_pdf(
         template_file,
         file_name,
@@ -19,6 +23,7 @@ def generate_pdf(
 ):
     template_loader = jinja2.FileSystemLoader(searchpath="./assets")
     template_env = jinja2.Environment(loader=template_loader)
+    template_env.filters['price'] = price
     template = template_env.get_template(template_file)
     output_text = template.render(url_for=url_for, **kwargs)
 
@@ -35,6 +40,7 @@ def generate_pdf(
         margin_bottom=margin_bottom,
         margin_x=margin_x,
     )
+
 
 def html2pdf(html_path, pdf_path, page_size, margin_top, margin_bottom, margin_x):
     options = {
