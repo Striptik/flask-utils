@@ -7,7 +7,7 @@ from .cache import get_cache, set_cache, del_cache
 
 
 def get_cache_key(name, env, _id):
-    return f"{name}_{env}_{_id}"
+    return f"{name.lower()}_{env}_{_id}"
 
 
 def get_entity_cache(host, _id: int, path, name, env):
