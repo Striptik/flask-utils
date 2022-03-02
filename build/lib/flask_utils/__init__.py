@@ -1,6 +1,6 @@
-from .cache import redis_client
+from .cache import redis_client, get_cache, del_cache, set_cache
 from .error_handler import handle_server_error, handle_not_found, handle_error
-from .ms_request import get_entities, get_entity, list_from_ids
+from .ms_request import get_entities, get_entity, list_from_ids, get_entity_cache, reset_entity_cache
 from .repository import get_search_result
 from .resource import GenericResourceClass
 from .search_params import (
@@ -27,6 +27,9 @@ __all__ = (
     "search_params",
     "resource",
     "redis_client",
+    "get_cache",
+    "del_cache",
+    "set_cache",
     "handle_server_error",
     "handle_not_found",
     "handle_error",
@@ -43,6 +46,8 @@ __all__ = (
     "get_entity",
     "get_entities",
     "list_from_ids",
+    "get_entity_cache",
+    "reset_entity_cache",
     "pdf",
     "remove_files",
     "generate_pdf",
