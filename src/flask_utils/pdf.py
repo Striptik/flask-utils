@@ -1,48 +1,58 @@
 import os
 
-
 import jinja2
 import pdfkit
+import tempfile
+from flask import render_template, url_for
+from flask_utils import console
 
 import config
-from flask import url_for
 
 
 def price(value):
-    return "{}€".format(round(value/100, 2))
+    return "{}€".format(round(value / 100, 2))
+
+
+def add_pdf_header(header_html, options, **kwargs):
+    if header_html is None:
+        return
+    with tempfile.NamedTemporaryFile(suffix=".html", delete=False) as header:
+        options["header-html"] = header.name
+        header.write(render_template(header_html, **kwargs).encode("utf-8"))
+    return
+
+
+def add_pdf_footer(footer_html, options, **kwargs):
+    if footer_html is None:
+        return
+    with tempfile.NamedTemporaryFile(suffix=".html", delete=False) as footer:
+        options["footer-html"] = footer.name
+        footer.write(render_template(footer_html, **kwargs).encode("utf-8"))
+    return
 
 
 def generate_pdf(
         template_file,
         file_name,
+        header_html=None,
+        footer_html=None,
         page_size="A4",
-        margin_top="0.35in",
+        margin_top="2in",
         margin_bottom="0.75in",
         margin_x="0.75in",
         **kwargs,
 ):
     template_loader = jinja2.FileSystemLoader(searchpath="./assets")
     template_env = jinja2.Environment(loader=template_loader)
-    template_env.filters['price'] = price
-    template = template_env.get_template(template_file)
-    output_text = template.render(url_for=url_for, **kwargs)
+    template_env.filters["price"] = price
+    main_template = template_env.get_template(template_file)
+    main_content = main_template.render(url_for=url_for, **kwargs)
 
     html_path = f"./temp/{file_name}.html"
     html_file = open(html_path, "w")
-    html_file.write(output_text)
+    html_file.write(main_content)
     html_file.close()
-    pdf_path = f"./temp/{file_name}.pdf"
-    html2pdf(
-        html_path=html_path,
-        pdf_path=pdf_path,
-        page_size=page_size,
-        margin_top=margin_top,
-        margin_bottom=margin_bottom,
-        margin_x=margin_x,
-    )
 
-
-def html2pdf(html_path, pdf_path, page_size, margin_top, margin_bottom, margin_x):
     options = {
         "page-size": page_size,
         "margin-top": margin_top,
@@ -51,19 +61,27 @@ def html2pdf(html_path, pdf_path, page_size, margin_top, margin_bottom, margin_x
         "margin-left": margin_x,
         "encoding": "UTF-8",
         "orientation": "Portrait",
-        "dpi": 600,
+        "dpi": 300,
         "no-outline": None,
         "no-stop-slow-scripts": True,
-        "enable-local-file-access": None,
+        "enable-local-file-access": True,
     }
+    add_pdf_header(header_html, options, **kwargs)
+    add_pdf_footer(footer_html, options, **kwargs)
+    console.log("options", options)
 
     configuration = (
         pdfkit.configuration(wkhtmltopdf="/opt/bin/wkhtmltopdf")
         if config.WKHTMLTOPDF_PATH
         else pdfkit.configuration()
     )
-    with open(html_path) as f:
-        pdfkit.from_file(f, pdf_path, options=options, configuration=configuration)
+    console.log("generate pdf")
+    pdfkit.from_string(
+        main_content,
+        f"./temp/{file_name}.pdf",
+        options=options,
+        configuration=configuration,
+    )
 
 
 def remove_files(filenames):
