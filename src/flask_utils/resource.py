@@ -5,11 +5,12 @@ from flask import request
 from . import logger
 from .error_handler import handle_not_found
 from .search_params import parse_search_params
+from .ms_request import reset_entity_cache
 
 
 class GenericResourceClass:
     def __init__(
-        self, repository, schema, list_schema, name, entity_name_key, result_key
+        self, repository, schema, list_schema, name, entity_name_key, result_key, env=None
     ):
         self.repository = repository
         self.schema = schema
@@ -17,6 +18,7 @@ class GenericResourceClass:
         self.name = name
         self.entity_name_key = entity_name_key
         self.result_key = result_key
+        self.env = env
 
     def get(self, entity_id):
         entity = self.repository.get(entity_id)
@@ -32,6 +34,8 @@ class GenericResourceClass:
         self.log_entity_change(
             entity_id, getattr(entity, self.entity_name_key, ""), entity, "deleted"
         )
+        if self.env is not None:
+            reset_entity_cache(name=self.name, env=self.env, _id=entity_id)
         return None, 204
 
     def update(self, entity_id, validator=None, **kwargs):
@@ -51,6 +55,8 @@ class GenericResourceClass:
             updated_entity,
             "updated",
         )
+        if self.env is not None:
+            reset_entity_cache(name=self.name, env=self.env, _id=entity_id)
         return None, 204
 
     def create(self, validator=None, **kwargs):
