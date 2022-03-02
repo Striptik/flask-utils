@@ -1,24 +1,31 @@
 import os
 
+
 import jinja2
 import pdfkit
 
 import config
+from flask import url_for
+
+
+def price(value):
+    return "{}€".format(round(value/100, 2))
 
 
 def generate_pdf(
-    template_file,
-    file_name,
-    page_size="A4",
-    margin_top="0.35in",
-    margin_bottom="0.75in",
-    margin_x="0.75in",
-    **kwargs,
+        template_file,
+        file_name,
+        page_size="A4",
+        margin_top="0.35in",
+        margin_bottom="0.75in",
+        margin_x="0.75in",
+        **kwargs,
 ):
     template_loader = jinja2.FileSystemLoader(searchpath="./assets")
     template_env = jinja2.Environment(loader=template_loader)
+    template_env.filters['price'] = price
     template = template_env.get_template(template_file)
-    output_text = template.render(kwargs)
+    output_text = template.render(url_for=url_for, **kwargs)
 
     html_path = f"./temp/{file_name}.html"
     html_file = open(html_path, "w")
