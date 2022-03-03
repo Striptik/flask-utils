@@ -45,7 +45,6 @@ def log_exception(exception: Exception, metas=None):
 def log_error(error, metas=None):
     if config.LOGS_DISABLED:
         return True
-    _metas = metas
     if config.DEBUG:
         click.echo(error)
     if metas is None:
