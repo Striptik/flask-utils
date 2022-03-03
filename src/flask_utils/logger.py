@@ -22,7 +22,10 @@ def log_info(message, metas=None):
         return True
     if config.DEBUG:
         click.echo(message)
-    get_logger().info(message, metas)
+    if metas is None:
+        get_logger().info(message)
+    else:
+        get_logger().info(message, metas)
 
 
 def log_exception(exception: Exception, metas=None):
@@ -45,4 +48,7 @@ def log_error(error, metas=None):
     _metas = metas
     if config.DEBUG:
         click.echo(error)
-    get_logger().error(error, metas)
+    if metas is None:
+        get_logger().info(error)
+    else:
+        get_logger().error(error, metas)
