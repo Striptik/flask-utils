@@ -17,7 +17,7 @@ def get_logger():
     ).logger
 
 
-def log_info(message, metas={}):
+def log_info(message, metas=None):
     if config.LOGS_DISABLED:
         return True
     if config.DEBUG:
@@ -25,7 +25,7 @@ def log_info(message, metas={}):
     get_logger().info(message, metas)
 
 
-def log_exception(exception: Exception, metas={}, origin=""):
+def log_exception(exception: Exception, metas=None):
     if config.LOGS_DISABLED:
         return True
     e_traceback = traceback.format_exception(
@@ -35,16 +35,14 @@ def log_exception(exception: Exception, metas={}, origin=""):
     for line in [line.rstrip("\n") for line in e_traceback]:
         traceback_lines.extend(line.splitlines())
     _metas = metas
-    _metas["origin"] = origin
     _metas["traceback_lines"] = traceback_lines
     get_logger().error(exception.__class__.__name__, _metas)
 
 
-def log_error(error, metas={}, origin=""):
+def log_error(error, metas=None):
     if config.LOGS_DISABLED:
         return True
     _metas = metas
-    _metas["origin"] = origin
     if config.DEBUG:
         click.echo(error)
     get_logger().error(error, metas)

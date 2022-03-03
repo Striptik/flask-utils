@@ -4,7 +4,6 @@ import jinja2
 import pdfkit
 import tempfile
 from flask import render_template, url_for
-from flask_utils import console
 
 import config
 
@@ -68,14 +67,12 @@ def generate_pdf(
     }
     add_pdf_header(header_html, options, **kwargs)
     add_pdf_footer(footer_html, options, **kwargs)
-    console.log("options", options)
 
     configuration = (
         pdfkit.configuration(wkhtmltopdf="/opt/bin/wkhtmltopdf")
         if config.WKHTMLTOPDF_PATH
         else pdfkit.configuration()
     )
-    console.log("generate pdf")
     pdfkit.from_string(
         main_content,
         f"./temp/{file_name}.pdf",
