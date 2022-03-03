@@ -19,8 +19,8 @@ class GenericResourceClass:
         self.entity_name_key = entity_name_key
         self.result_key = result_key
 
-    def get(self, entity_id):
-        entity = self.repository.get(entity_id)
+    def get(self, entity_id, **kwargs):
+        entity = self.repository.get(entity_id, **kwargs)
         handle_not_found(entity, self.name, entity_id)
         return self.schema.dump(entity)
 
