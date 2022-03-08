@@ -2,15 +2,16 @@ from datetime import datetime
 
 from flask import request
 
-from . import logger
 from flask_utils.error_handler import handle_not_found
-from flask_utils.search_params import parse_search_params
 from flask_utils.ms_request import reset_entity_cache
+from flask_utils.search_params import parse_search_params
+
+from . import logger
 
 
 class GenericResourceClass:
     def __init__(
-            self, repository, schema, list_schema, name, entity_name_key, result_key
+        self, repository, schema, list_schema, name, entity_name_key, result_key
     ):
         self.repository = repository
         self.schema = schema
