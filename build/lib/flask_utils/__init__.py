@@ -15,6 +15,8 @@ from .search_params import (
 from .pdf import remove_files, generate_pdf
 from .s3 import upload_file, download_file
 from .schema import NullableString
+from .filters import filter_not_none
+from .computer import compute_vat, compute_total_vat, compute_without_tax
 
 __all__ = (
     "cache",
@@ -55,5 +57,11 @@ __all__ = (
     "upload_file",
     "download_file",
     "schema",
-    "NullableString"
+    "NullableString",
+    "filters",
+    "filter_not_none",
+    "computer",
+    "compute_vat",
+    "compute_total_vat",
+    "compute_without_tax",
 )

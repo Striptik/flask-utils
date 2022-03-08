@@ -2,9 +2,9 @@ import enum as _enum
 from flask import abort, jsonify
 from werkzeug.exceptions import HTTPException, NotFound
 
-from .console import log
+from flask_utils.console import log
 from .logger import log_error, log_exception
-from .i18n import translate
+from flask_utils.i18n import translate
 
 
 class ErrorTypeEnum(str, _enum.Enum):
@@ -19,7 +19,7 @@ def handle_server_error(error, error_type):
     if error_type == ErrorTypeEnum.INTEGRITY:
         return (jsonify(error="Integrity - {}".format(str(error.orig)), metas={}), 400)
     elif error_type == ErrorTypeEnum.SCHEMA_VALIDATION:
-        log_exception(error, error.messages, "schema")
+        log_exception(error, error.messages)
         metas = error.messages
         metas.pop("traceback_lines")
         return (
@@ -28,7 +28,7 @@ def handle_server_error(error, error_type):
         )
     else:
         code = 500
-        log_exception(error, {}, "internal error")
+        log_exception(error, {})
         if isinstance(error, HTTPException):
             code = error.code
             return jsonify(error=format(str(error))), code

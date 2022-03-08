@@ -15,7 +15,7 @@ class Singleton(type):
 
 class DatadogHttpHandler:
     def __init__(
-        self, api_key, service, logger_name="", level=None, raise_exception=False
+            self, api_key, service, logger_name="", level=None, raise_exception=False
     ):
 
         self.api_key = api_key
@@ -49,7 +49,7 @@ class DataDogHandler(StreamHandler):
 
     def emit(self, record):
         payload = {
-            "message": self.format(record),
+            "message": record.msg,
             "level": record.levelname,
             "metas": record.args,
         }
