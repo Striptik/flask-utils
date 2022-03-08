@@ -17,6 +17,8 @@ from .s3 import upload_file, download_file
 from .schema import NullableString
 from .filters import filter_not_none
 from .computer import compute_vat, compute_total_vat, compute_without_tax
+from .console import log
+from .logger import log_error, log_exception, log_info
 
 __all__ = (
     "cache",
@@ -25,6 +27,9 @@ __all__ = (
     "date",
     "error_handler",
     "logger",
+    "log_exception",
+    "log_info",
+    "log_error",
     "repository",
     "search_params",
     "resource",
@@ -64,4 +69,5 @@ __all__ = (
     "compute_vat",
     "compute_total_vat",
     "compute_without_tax",
+    "log",
 )
