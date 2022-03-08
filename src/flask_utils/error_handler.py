@@ -3,8 +3,9 @@ from flask import abort, jsonify
 from werkzeug.exceptions import HTTPException, NotFound
 
 from flask_utils.console import log
-from .logger import log_error, log_exception
 from flask_utils.i18n import translate
+
+from .logger import log_error, log_exception
 
 
 class ErrorTypeEnum(str, _enum.Enum):

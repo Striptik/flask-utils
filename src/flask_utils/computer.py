@@ -1,5 +1,5 @@
 def compute_vat(vat, rate):
-    return vat * rate / 10000
+    return vat * rate / 100
 
 
 def compute_total_vat(vat_code):

@@ -28,7 +28,9 @@ def upload_file(s3_key, s3_secret, file_name, bucket, object_name=None):
 
 def download_file(s3_key, s3_secret, file_name, bucket):
     try:
-        s3_client(s3_key, s3_secret).download_file(bucket, file_name, f"temp/{file_name}")
+        s3_client(s3_key, s3_secret).download_file(
+            bucket, file_name, f"temp/{file_name}"
+        )
     except ClientError as e:
         logging.error(e)
         return False
