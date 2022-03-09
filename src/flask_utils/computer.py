@@ -11,7 +11,7 @@ def compute_total_vat(vat_code):
 
 
 def compute_average_vat(vat_code):
-    compute_total_vat(vat_code) / 100
+    return compute_total_vat(vat_code) / 100
 
 
 def compute_without_tax(with_tax=None, vat_code=None):
