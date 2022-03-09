@@ -41,7 +41,7 @@ Once your're good with the updates, on your feature-branch:
 2. Format, test and lint
 3. Create a new version with this command:
 ```bash
-pip uninstall -y flask_utils && pip install -v .
+pip uninstall -y flask_utils && pip install -v . --no-cache-dir
 ```
 4. Add, commit, and Push your changes
 5. Then run this command to tag your commit, where the tag corresponds to the new version
