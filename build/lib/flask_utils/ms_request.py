@@ -7,15 +7,15 @@ from flask_utils.cache import del_cache, get_cache, set_cache
 from flask_utils.logger import log_error, log_exception
 
 
-def get_cache_key(name, _id, is_light=False):
-    env = os.getenv("ENVIRONMENT", "dev")
+def get_cache_key(name, _id, env, is_light=False):
     return f"{name.lower()}_{env}_{_id}{'_light' if is_light else ''}"
 
 
 def get_entity_cache(host, _id: int, path, name, is_light=False):
     try:
-        key = get_cache_key(name, _id, is_light)
-        cached_entity = get_cache(key)
+        env = os.getenv("ENVIRONMENT", "dev")
+        key = get_cache_key(name, _id, env, is_light)
+        cached_entity = get_cache(key) if env != "local" else None
         if cached_entity:
             return json.loads(cached_entity)
         else:
@@ -35,8 +35,9 @@ def get_entity_cache(host, _id: int, path, name, is_light=False):
 
 def reset_entity_cache(_id: int, name):
     try:
-        del_cache(get_cache_key(name, _id, True))
-        del_cache(get_cache_key(name, _id, False))
+        env = os.getenv("ENVIRONMENT", "dev")
+        del_cache(get_cache_key(name, _id, env, True))
+        del_cache(get_cache_key(name, _id, env, False))
     except Exception as e:
         log_error(f"Failed to reset {name} {_id} in cache", {"_id": _id})
 
