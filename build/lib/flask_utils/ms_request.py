@@ -25,7 +25,8 @@ def get_entity_cache(host, _id: int, path, name, is_light=False):
             if entity is None or entity is False:
                 return None
             try:
-                set_cache(key, json.dumps(entity))
+                if env != "local":
+                    set_cache(key, json.dumps(entity))
             finally:
                 return entity
     except Exception as e:
