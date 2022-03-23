@@ -20,6 +20,7 @@ src/flask_utils/resource.py
 src/flask_utils/s3.py
 src/flask_utils/schema.py
 src/flask_utils/search_params.py
+src/flask_utils/slack_notification.py
 src/flask_utils.egg-info/PKG-INFO
 src/flask_utils.egg-info/SOURCES.txt
 src/flask_utils.egg-info/dependency_links.txt
