@@ -1,9 +1,10 @@
 import json
 
-import logger
 import requests
 
 import config
+
+from .logger import log_error, log_exception
 
 
 def send_slack(channel, template_id, params={}):
@@ -21,7 +22,7 @@ def send_slack(channel, template_id, params={}):
         if response.status_code < 300:
             return True
         response_json = json.loads(response.content.decode("utf-8"))
-        logger.log_error(
+        log_error(
             "Failed to send notification",
             {
                 "response": response_json,
@@ -35,7 +36,7 @@ def send_slack(channel, template_id, params={}):
         )
         return False
     except Exception as e:
-        logger.log_exception(
+        log_exception(
             e, {"email": channel, "template_id": template_id, "params": params}
         )
         return False
@@ -43,7 +44,7 @@ def send_slack(channel, template_id, params={}):
 
 def send_error_to_slack(channel=None, template=None, title=None, datas=None):
     if (channel is None) or (template is None) or (title is None):
-        logger.log_error(
+        log_error(
             "Error params",
             dict(channel=channel, template=template, title=title, datas=datas),
         )
