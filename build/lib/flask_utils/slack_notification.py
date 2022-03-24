@@ -42,7 +42,7 @@ def send_slack(channel, template_id, params={}):
         return False
 
 
-def send_error_to_slack(channel=None, template=None, title=None, datas=None):
+def send_slack_message(channel=None, template=None, title=None, datas=None):
     if (channel is None) or (template is None) or (title is None):
         log_error(
             "Error params",
