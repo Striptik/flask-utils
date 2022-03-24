@@ -25,6 +25,7 @@ from .search_params import (
     parse_search_params,
     parse_string_list,
 )
+from .slack_notification import send_error_to_slack, send_slack
 
 __all__ = (
     "cache",
@@ -76,4 +77,7 @@ __all__ = (
     "compute_total_vat",
     "compute_without_tax",
     "log",
+    "slack_notification",
+    "send_slack",
+    "send_error_to_slack",
 )
