@@ -42,11 +42,11 @@ def send_slack(channel, template_id, params={}):
         return False
 
 
-def send_slack_message(channel=None, template=None, title=None, datas=None):
+def send_slack_message(channel=None, template=None, title=None, data=None):
     if (channel is None) or (template is None) or (title is None):
         log_error(
             "Error params",
-            dict(channel=channel, template=template, title=title, datas=datas),
+            dict(channel=channel, template=template, title=title, data=data),
         )
         return None
     message = {
@@ -57,8 +57,8 @@ def send_slack_message(channel=None, template=None, title=None, datas=None):
             }
         ]
     }
-    if datas is not None:
-        for key, value in datas.items():
+    if data is not None:
+        for key, value in data.items():
             message.get("message").append(
                 {
                     "type": "section",
