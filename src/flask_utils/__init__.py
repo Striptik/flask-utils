@@ -25,7 +25,7 @@ from .search_params import (
     parse_search_params,
     parse_string_list,
 )
-from .slack_notification import send_slack_message, send_slack
+from .slack_notification import send_slack, send_slack_message
 
 __all__ = (
     "cache",

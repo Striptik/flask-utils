@@ -37,7 +37,7 @@ def log_exception(exception: Exception, metas=None):
     traceback_lines = []
     for line in [line.rstrip("\n") for line in e_traceback]:
         traceback_lines.extend(line.splitlines())
-    _metas = metas if metas else {}
+    _metas = metas if metas is not None else {}
     _metas["traceback_lines"] = traceback_lines
     get_logger().error(exception.__class__.__name__, _metas)
 
