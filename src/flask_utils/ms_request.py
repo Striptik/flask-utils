@@ -37,8 +37,9 @@ def get_entity_cache(host, _id: int, path, name, is_light=False):
 def reset_entity_cache(_id: int, name):
     try:
         env = os.getenv("ENVIRONMENT", "dev")
-        del_cache(get_cache_key(name, _id, env, True))
-        del_cache(get_cache_key(name, _id, env, False))
+        if env != "local":
+            del_cache(get_cache_key(name, _id, env, True))
+            del_cache(get_cache_key(name, _id, env, False))
     except Exception as e:
         log_error(f"Failed to reset {name} {_id} in cache", {"_id": _id})
 
