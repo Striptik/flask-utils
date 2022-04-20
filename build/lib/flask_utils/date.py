@@ -20,3 +20,7 @@ def get_start_and_end_of_today():
 
 def get_start_of_month():
     return datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+
+
+def get_start_of_day(date):
+    return date.replace(hour=0, minute=0, second=0, microsecond=0)
