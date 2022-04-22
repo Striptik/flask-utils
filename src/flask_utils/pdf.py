@@ -31,15 +31,16 @@ def add_pdf_footer(footer_html, options, **kwargs):
 
 
 def generate_pdf(
-    template_file,
-    file_name,
-    header_html=None,
-    footer_html=None,
-    page_size="A4",
-    margin_top="2in",
-    margin_bottom="0.75in",
-    margin_x="0.75in",
-    **kwargs,
+        template_file,
+        file_name,
+        header_html=None,
+        footer_html=None,
+        page_width="21cm",
+        page_height="29.7cm",
+        margin_top="2in",
+        margin_bottom="0.75in",
+        margin_x="0.75in",
+        **kwargs,
 ):
     template_loader = jinja2.FileSystemLoader(searchpath="./assets")
     template_env = jinja2.Environment(loader=template_loader)
@@ -53,7 +54,8 @@ def generate_pdf(
     html_file.close()
 
     options = {
-        "page-size": page_size,
+        "page-width": page_width,
+        "page-height": page_height,
         "margin-top": margin_top,
         "margin-right": margin_x,
         "margin-bottom": margin_bottom,
