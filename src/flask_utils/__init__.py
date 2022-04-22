@@ -10,7 +10,6 @@ from .date import (
 )
 from .error_handler import handle_error, handle_not_found, handle_server_error
 from .filters import filter_not_none
-from .keep_warm import keep_warm_task
 from .logger import log_error, log_exception, log_info
 from .ms_request import (
     get_entities,
@@ -94,6 +93,4 @@ __all__ = (
     "get_date_in_timezone",
     "get_now_in_timezone",
     "get_start_of_day",
-    "keep_warm",
-    "keep_warm_task",
 )
