@@ -3,6 +3,7 @@ import os
 
 import boto3
 from botocore.exceptions import ClientError
+from botocore.config import Config
 
 
 def s3_client(s3_key, s3_secret):
@@ -11,7 +12,7 @@ def s3_client(s3_key, s3_secret):
         aws_secret_access_key=s3_secret,
         region_name="eu-west-1",
     )
-    client = session.client("s3")
+    client = session.client("s3", config=Config(connect_timeout=5, read_timeout=10, retries={'max_attempts': 2}))
     return client
 
 

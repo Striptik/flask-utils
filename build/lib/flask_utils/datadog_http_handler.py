@@ -59,7 +59,10 @@ class DataDogHandler(StreamHandler):
             payload["ddsource"] = self.service
 
         session = FuturesSession()
-        session.post(self.url, json=payload, headers=self.headers)
+        try:
+            session.post(self.url, json=payload, headers=self.headers)
+        except Exception as e:
+            return
 
 
 class DatadogSingletonHttpHandler(DatadogHttpHandler, metaclass=Singleton):
