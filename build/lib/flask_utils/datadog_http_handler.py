@@ -1,7 +1,7 @@
 import logging
 from logging import StreamHandler
 
-import requests
+from requests_futures.sessions import FuturesSession
 
 
 class Singleton(type):
@@ -15,7 +15,7 @@ class Singleton(type):
 
 class DatadogHttpHandler:
     def __init__(
-        self, api_key, service, logger_name="", level=None, raise_exception=False
+            self, api_key, service, logger_name="", level=None, raise_exception=False
     ):
 
         self.api_key = api_key
@@ -58,13 +58,11 @@ class DataDogHandler(StreamHandler):
             payload["hostname"] = self.service
             payload["ddsource"] = self.service
 
+        session = FuturesSession()
         try:
-            response = requests.post(self.url, json=payload, headers=self.headers)
-            response.raise_for_status()
-            logging.info(response.status_code)
-        except requests.exceptions.RequestException as err:
-            if self.raise_exception:
-                raise Exception(err)
+            session.post(self.url, json=payload, headers=self.headers)
+        except Exception as e:
+            return
 
 
 class DatadogSingletonHttpHandler(DatadogHttpHandler, metaclass=Singleton):
