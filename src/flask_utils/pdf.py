@@ -48,7 +48,9 @@ def generate_pdf(
     main_template = template_env.get_template(template_file)
     main_content = main_template.render(url_for=url_for, **kwargs)
 
-    html_path = f"./temp/{file_name}.html"
+    file_path = f"./temp/{file_name}" if config.IS_LOCAL else f"/tmp/{file_name}"
+
+    html_path = f"{file_path}.html"
     html_file = open(html_path, "w")
     html_file.write(main_content)
     html_file.close()
@@ -76,13 +78,11 @@ def generate_pdf(
         else pdfkit.configuration()
     )
     pdfkit.from_string(
-        main_content,
-        f"./temp/{file_name}.pdf",
-        options=options,
-        configuration=configuration,
+        main_content, f"{file_path}.pdf", options=options, configuration=configuration
     )
 
 
 def remove_files(filenames):
     for filename in filenames:
-        os.remove("{}/temp/{}".format(os.path.abspath(os.getcwd()), filename))
+        path = f"{os.path.abspath(os.getcwd())}/temp" if config.IS_LOCAL else "/tmp"
+        os.remove("{}/{}".format(path, filename))
