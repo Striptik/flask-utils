@@ -10,7 +10,7 @@ import config
 
 def get_temp_path(local_prefix=""):
     return (
-        f"${local_prefix}temp" if os.getenv("ENVIRONMENT", "dev") == "local" else "/tmp"
+        f"{local_prefix}temp" if os.getenv("ENVIRONMENT", "dev") == "local" else "/tmp"
     )
 
 
