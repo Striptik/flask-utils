@@ -14,7 +14,7 @@ def get_cache_key(name, _id, env, is_light=False):
 def get_entity_cache(host, _id: int, path, name, is_light=False):
     try:
         env = os.getenv("ENVIRONMENT", "dev")
-        if env == 'test':
+        if env == "test":
             return None
         key = get_cache_key(name, _id, env, is_light)
         cached_entity = None if env == "local" else get_cache(key)
@@ -27,7 +27,7 @@ def get_entity_cache(host, _id: int, path, name, is_light=False):
             if entity is None or entity is False:
                 return None
             try:
-                if env != 'local':
+                if env != "local":
                     set_cache(key, json.dumps(entity))
             finally:
                 return entity

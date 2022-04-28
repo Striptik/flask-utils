@@ -7,6 +7,8 @@ load_dotenv()
 
 LOGS_DISABLED = os.getenv("DISABLE_LOGS") == "true"
 
+IS_LOCAL = os.getenv("ENVIRONMENT", "dev") == 'local'
+
 logging.basicConfig(
     filename=os.getenv("SERVICE_LOG", "server.log"),
     level=logging.DEBUG,
