@@ -18,7 +18,7 @@ from .ms_request import (
     list_from_ids,
     reset_entity_cache,
 )
-from .pdf import generate_pdf, remove_files, get_temp_path
+from .pdf import generate_pdf, get_temp_path, remove_files
 from .repository import get_search_result
 from .resource import GenericResourceClass
 from .s3 import download_file, upload_file
