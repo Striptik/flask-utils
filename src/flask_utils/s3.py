@@ -4,7 +4,7 @@ import os
 import boto3
 from botocore.exceptions import ClientError
 
-from src.flask_utils.pdf import get_temp_path
+from .pdf import get_temp_path
 
 
 def s3_client(s3_key, s3_secret):
