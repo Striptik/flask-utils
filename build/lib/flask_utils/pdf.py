@@ -48,7 +48,11 @@ def generate_pdf(
     main_template = template_env.get_template(template_file)
     main_content = main_template.render(url_for=url_for, **kwargs)
 
-    file_path = f"./temp/{file_name}" if config.IS_LOCAL else f"/tmp/{file_name}"
+    file_path = (
+        f"./temp/{file_name}"
+        if os.getenv("ENVIRONMENT", "dev") == "local"
+        else f"/tmp/{file_name}"
+    )
 
     html_path = f"{file_path}.html"
     html_file = open(html_path, "w")
@@ -84,5 +88,9 @@ def generate_pdf(
 
 def remove_files(filenames):
     for filename in filenames:
-        path = f"{os.path.abspath(os.getcwd())}/temp" if config.IS_LOCAL else "/tmp"
+        path = (
+            f"{os.path.abspath(os.getcwd())}/temp"
+            if os.getenv("ENVIRONMENT", "dev") == "local"
+            else "/tmp"
+        )
         os.remove("{}/{}".format(path, filename))
