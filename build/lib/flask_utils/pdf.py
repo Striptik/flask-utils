@@ -8,6 +8,12 @@ from flask import render_template, url_for
 import config
 
 
+def get_temp_path(local_prefix=""):
+    return (
+        f"${local_prefix}temp" if os.getenv("ENVIRONMENT", "dev") == "local" else "/tmp"
+    )
+
+
 def price(value):
     return "{}€".format(round(value / 100, 2))
 
@@ -48,11 +54,7 @@ def generate_pdf(
     main_template = template_env.get_template(template_file)
     main_content = main_template.render(url_for=url_for, **kwargs)
 
-    file_path = (
-        f"./temp/{file_name}"
-        if os.getenv("ENVIRONMENT", "dev") == "local"
-        else f"/tmp/{file_name}"
-    )
+    file_path = f"{get_temp_path(f'./')}/{file_name}"
 
     html_path = f"{file_path}.html"
     html_file = open(html_path, "w")
@@ -88,9 +90,5 @@ def generate_pdf(
 
 def remove_files(filenames):
     for filename in filenames:
-        path = (
-            f"{os.path.abspath(os.getcwd())}/temp"
-            if os.getenv("ENVIRONMENT", "dev") == "local"
-            else "/tmp"
-        )
-        os.remove("{}/{}".format(path, filename))
+        path = get_temp_path(f"{os.path.abspath(os.getcwd())}/")
+        os.remove(f"{path}/{filename}")
