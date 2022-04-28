@@ -54,7 +54,7 @@ def generate_pdf(
     main_template = template_env.get_template(template_file)
     main_content = main_template.render(url_for=url_for, **kwargs)
 
-    file_path = f"{get_temp_path(f'./')}/{file_name}"
+    file_path = f"{get_temp_path('./')}/{file_name}"
 
     html_path = f"{file_path}.html"
     html_file = open(html_path, "w")
