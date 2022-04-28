@@ -4,8 +4,6 @@ import os
 import boto3
 from botocore.exceptions import ClientError
 
-import config
-
 
 def s3_client(s3_key, s3_secret):
     session = boto3.session.Session(
@@ -30,7 +28,11 @@ def upload_file(s3_key, s3_secret, file_name, bucket, object_name=None):
 
 def download_file(s3_key, s3_secret, file_name, bucket):
     try:
-        path = f"temp/{file_name}" if config.IS_LOCAL else f"/tmp/{file_name}"
+        path = (
+            f"temp/{file_name}"
+            if os.getenv("ENVIRONMENT", "dev") == "local"
+            else f"/tmp/{file_name}"
+        )
         s3_client(s3_key, s3_secret).download_file(bucket, file_name, path)
     except ClientError as e:
         logging.error(e)
