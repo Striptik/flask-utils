@@ -1,7 +1,6 @@
 import marshmallow as ma
 import flask_restx as restx
 from flask_restx import Api
-from flask_utils import console
 from typing import Callable, Union
 
 
@@ -11,8 +10,6 @@ __all__ = [
 ]
 
 
-
-# Flask-RestX replacements for marshmallow fields
 restx_fields_mapper = {
     "Str": "String",
     "Bool": "Boolean",
@@ -56,30 +53,6 @@ def restx_fields(
         example: str = None,
         mask: dict = None
 ):
-    """
-    To be used in marshmallow field `metadata` if there are conflicting keys.
-    Let's say you need `description` field from metadata in other place than for restx field.
-    Ex:
-    ```py
-        class MaSchema(ma.Schema):
-            name = ma.fields(
-                required=True,
-                metadata={
-                    **restx_fields(description="The username"),
-                    'description': 'needed for something else'
-                }
-            )
-    ```
-
-    If you don't use `metadata` parameter for other operations you can just specify the fields in the dict
-    No need to use `restx_fields` function
-    Ex:
-    ```py
-        class MaSchema(ma.Schema):
-            name = ma.fields(required=True, metadata={'description': 'The username'})
-    ```
-
-    """
     return {'restx_params': {
         'description': description,
         'enum': enum,
@@ -98,11 +71,6 @@ def restx_fields(
 
 
 def get_marshmallow_field_type(ma_field: Callable) -> Union[str, None]:
-    """
-    Get string name for field type
-    :param ma_field: marshmallow field
-    :return: string name of the field
-    """
     attr_name = getattr(type(ma_field), "__name__")
     if attr_name in restx_fields_mapper:
         return restx_fields_mapper[attr_name]
@@ -110,13 +78,6 @@ def get_marshmallow_field_type(ma_field: Callable) -> Union[str, None]:
 
 
 def get_restx_params(ma_params: dict):
-    """
-    On `metadata` field from marshmallow if `restx_params` key is present
-    field will be used to add restx field kwargs
-    if not all keys from `metadata` will be used as kwargs for flask restx fields
-    :param ma_params: vars from marshmallow field
-    :return: flask restx field kwargs
-    """
     restx_params = ma_params['metadata'].get('restx_params') or ma_params['metadata']
     return {
         'required': ma_params['required'],
@@ -125,11 +86,6 @@ def get_restx_params(ma_params: dict):
 
 
 def get_field_data(ma_field):
-    """
-    Get data required to create restx model
-    :param ma_field: marshmallow field
-    :return: dict with info needed to create restx model
-    """
     return {
         "params": get_restx_params(vars(ma_field)),
         "type": get_marshmallow_field_type(ma_field),
@@ -139,41 +95,6 @@ def get_field_data(ma_field):
 
 
 def get_marshmallow_metadata(schema: Callable):
-    """
-    Returns from marshmallow schema the following dict:
-    ```json
-        {
-            "schema1": {
-                "field_name1": {
-                    "params": {},
-                    "type": "String",
-                    "nested": None,
-                    'inner': field data
-                    "raw": marshmallow_field,
-                },
-                "field_name2": {
-                    "params": {},
-                    "type": "String",
-                    'inner': field data
-                    "raw": marshmallow_field,
-                    "nested": {
-                        "schema2": {
-                            "field_name1": {
-                                "params": {},
-                                "type": "String",
-                                "nested": None,
-                                'inner': field data
-                                "raw": marshmallow_field
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    ```
-
-    """
-
     marshmallow_metadata = {schema.__name__: {}}
 
     # Simple fields
@@ -194,8 +115,9 @@ def get_marshmallow_metadata(schema: Callable):
                     marshmallow_metadata[schema.__name__][field_name]['nested'] = get_marshmallow_metadata(
                         field_data['raw'].inner.nested)
                 else:
-                    # ex: ma.fields.List(ma.fields.String)
-                    marshmallow_metadata[schema.__name__][field_name]['inner'] = get_field_data(field_data['raw'].inner)
+                    marshmallow_metadata[schema.__name__][field_name]['inner'] = get_field_data(
+                        field_data['raw'].inner
+                    )
 
     return marshmallow_metadata
 
@@ -255,12 +177,6 @@ def ma_metadata_to_restx_model(api: Api, ma_metadata: dict):
 
 
 def marshmallow_to_restx_model(api: restx.Api, schema: Callable):
-    """
-    Convert a marshmallow schema to a Flask-Restx model
-    :param api: Restx Api instance or Namespace instance
-    :param schema: Marshmallow schema
-    :return: Restx model from marshmallow schema
-    """
     ma_metadata = get_marshmallow_metadata(schema)
     restx_model = ma_metadata_to_restx_model(api, ma_metadata)
     return restx_model
