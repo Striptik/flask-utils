@@ -33,6 +33,7 @@ from .search_params import (
     parse_string_list,
 )
 from .slack_notification import send_slack, send_slack_message
+from .marshmallow_to_restx import marshmallow_to_restx_model
 
 __all__ = (
     "cache",
@@ -94,4 +95,6 @@ __all__ = (
     "get_date_in_timezone",
     "get_now_in_timezone",
     "get_start_of_day",
+    "marshmallow_to_restx",
+    "marshmallow_to_restx_model"
 )
