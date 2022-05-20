@@ -126,12 +126,14 @@ def get_restx_field(api: Api, ma_field_meta: dict, *, nested: bool = False):
     if nested:
         return restx.fields.Nested(
             api.model,
+            skip_none=True,
             **ma_field_meta['params']
         )
 
     if ma_field_meta['type'] == "List" and "inner" in ma_field_meta:
         return restx.fields.List(
             getattr(restx.fields, ma_field_meta['inner']['type'])(**ma_field_meta['inner']['params']),
+            skip_none=True,
             **ma_field_meta['params']
         )
 
@@ -169,8 +171,8 @@ def ma_metadata_to_restx_model(api: Api, ma_metadata: dict):
 
             if field_instance['type'] == 'List' and field_instance['nested'] is not None:
                 restx_model[field_name] = restx.fields.List(
-                    restx.fields.Nested(ma_metadata_to_restx_model(api, field_instance['nested'])),
-                    **ma_field_meta['params']
+                    restx.fields.Nested(ma_metadata_to_restx_model(api, field_instance['nested']), skip_none=True),
+                    **ma_field_meta['params'],
                 )
 
     return api.model(schema_name, restx_model)
