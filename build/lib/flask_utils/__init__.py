@@ -34,6 +34,10 @@ from .search_params import (
     parse_string_list,
 )
 from .slack_notification import send_slack, send_slack_message
+from .marshmallow_to_restx import marshmallow_to_restx_model
+from .zappa_async import async_task, async_function
+from .notification import get_product_order_confirmation_template_id
+
 
 __all__ = (
     "cache",
@@ -97,4 +101,9 @@ __all__ = (
     "get_start_of_day",
     "marshmallow_to_restx",
     "marshmallow_to_restx_model",
+    "zappa_async",
+    "async_function",
+    "async_task",
+    "notification",
+    "get_product_order_confirmation_template_id"
 )
