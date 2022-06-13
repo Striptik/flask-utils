@@ -61,7 +61,7 @@ class DataDogHandler(StreamHandler):
         session = FuturesSession()
         try:
             session.post(self.url, json=payload, headers=self.headers)
-        except Exception as e:
+        except Exception:
             return
 
 

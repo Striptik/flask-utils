@@ -7,5 +7,5 @@ def translate(key, lang="fr"):
             data = json.load(f)
             translation = data.get(key, None)
             return key if translation is None else translation
-    except:
+    except Exception:
         return key
