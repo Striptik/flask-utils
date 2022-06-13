@@ -31,7 +31,7 @@ def get_entity_cache(host, _id: int, path, name, is_light=False):
                     set_cache(key, json.dumps(entity))
             finally:
                 return entity
-    except Exception as e:
+    except Exception:
         log_error(f"Failed to get {name} in cache", {"_id": _id})
         return get_entity(host=host, _id=_id, path=path, name=name)
 
@@ -42,7 +42,7 @@ def reset_entity_cache(_id: int, name):
         if env not in ["local", "test"]:
             del_cache(get_cache_key(name, _id, env, True))
             del_cache(get_cache_key(name, _id, env, False))
-    except Exception as e:
+    except Exception:
         log_error(f"Failed to reset {name} {_id} in cache", {"_id": _id})
 
 

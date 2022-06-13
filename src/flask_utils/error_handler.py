@@ -29,14 +29,14 @@ def handle_server_error(error, error_type):
         )
     else:
         code = 500
-        log_exception(error, {})
+        log_exception(error)
         if isinstance(error, HTTPException):
             code = error.code
             return jsonify(error=format(str(error))), code
         return jsonify(error="Internal Error - {}".format(str(error))), code
 
 
-def handle_error(message, metas={}, code=400):
+def handle_error(message, metas=None, code=400):
     translated_message = translate(message)
     log_error(translated_message, metas)
     abort(code, translated_message)
