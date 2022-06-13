@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from copy import copy
 from flask import request
 
 from flask_utils.error_handler import handle_not_found
@@ -38,12 +39,12 @@ class GenericResourceClass:
         return None, 204
 
     def update(self, entity_id, validator=None, **kwargs):
+        existing_entity = copy(self.repository.get(entity_id))
+        handle_not_found(existing_entity, self.name, entity_id)
         entity_json = request.get_json()
         for key, value in kwargs.items():
             entity_json[key] = value
         updated_entity = self.schema.load(entity_json)
-        existing_entity = self.repository.get(entity_id)
-        handle_not_found(existing_entity, self.name, entity_id)
         updated_entity.updated_at = datetime.now()
         if validator is not None:
             validator.validate(updated_entity, existing_entity)

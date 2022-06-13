@@ -11,6 +11,7 @@ from .date import (
 from .error_handler import handle_error, handle_not_found, handle_server_error
 from .filters import filter_not_none
 from .logger import log_error, log_exception, log_info
+from .marshmallow_to_restx import marshmallow_to_restx_model
 from .ms_request import (
     get_entities,
     get_entity,
@@ -33,7 +34,6 @@ from .search_params import (
     parse_string_list,
 )
 from .slack_notification import send_slack, send_slack_message
-from .marshmallow_to_restx import marshmallow_to_restx_model
 
 __all__ = (
     "cache",
@@ -96,5 +96,5 @@ __all__ = (
     "get_now_in_timezone",
     "get_start_of_day",
     "marshmallow_to_restx",
-    "marshmallow_to_restx_model"
+    "marshmallow_to_restx_model",
 )
