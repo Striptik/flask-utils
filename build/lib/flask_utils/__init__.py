@@ -34,6 +34,7 @@ from .search_params import (
     parse_string_list,
 )
 from .slack_notification import send_slack, send_slack_message
+from .database import MutableList
 
 __all__ = (
     "cache",
@@ -97,4 +98,6 @@ __all__ = (
     "get_start_of_day",
     "marshmallow_to_restx",
     "marshmallow_to_restx_model",
+    "database",
+    "MutableList"
 )
