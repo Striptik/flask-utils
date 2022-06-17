@@ -6,6 +6,7 @@ src/flask_utils/__init__.py
 src/flask_utils/cache.py
 src/flask_utils/computer.py
 src/flask_utils/console.py
+src/flask_utils/database.py
 src/flask_utils/datadog_http_handler.py
 src/flask_utils/date.py
 src/flask_utils/error_handler.py
