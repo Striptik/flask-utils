@@ -55,10 +55,24 @@ class BaseModel:
         }
 
     def save(self):
-        db.session.add(self)
-        db.session.commit()
-        return self
+        session = db.create_scoped_session()
+        try:
+            session.add(self)
+            session.commit()
+            return self
+        except Exception:
+            session.rollback()
+            raise
+        finally:
+            session.close()
 
     def delete(self):
-        db.session.delete(self)
-        db.session.commit()
+        session = db.create_scoped_session()
+        try:
+            session.delete(self)
+            session.commit()
+        except Exception:
+            session.rollback()
+            raise
+        finally:
+            session.close()
