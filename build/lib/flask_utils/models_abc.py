@@ -63,8 +63,6 @@ class BaseModel:
         except Exception:
             session.rollback()
             raise
-        finally:
-            session.close()
 
     def delete(self):
         session = db.create_scoped_session()
@@ -74,5 +72,3 @@ class BaseModel:
         except Exception:
             session.rollback()
             raise
-        finally:
-            session.close()
