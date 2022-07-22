@@ -19,4 +19,4 @@ def compute_without_tax(with_tax=None, vat_code=None):
         return 0
     if vat_code is None:
         return with_tax
-    return int(with_tax / (1 + compute_average_vat(vat_code)))
+    return round(with_tax / (1 + compute_average_vat(vat_code)))
