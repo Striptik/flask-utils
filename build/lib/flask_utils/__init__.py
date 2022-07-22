@@ -35,6 +35,7 @@ from .search_params import (
 )
 from .slack_notification import send_slack, send_slack_message
 from .database import MutableList
+from .request import custom_request
 
 __all__ = (
     "cache",
@@ -99,5 +100,7 @@ __all__ = (
     "marshmallow_to_restx",
     "marshmallow_to_restx_model",
     "database",
-    "MutableList"
+    "MutableList",
+    "request",
+    "custom_request"
 )
