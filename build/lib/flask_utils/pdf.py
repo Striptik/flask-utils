@@ -3,7 +3,6 @@ import os
 import jinja2
 import pdfkit
 import tempfile
-from flask import render_template, url_for
 
 import config
 
@@ -23,7 +22,10 @@ def add_pdf_header(header_html, options, **kwargs):
         return
     with tempfile.NamedTemporaryFile(suffix=".html", delete=False) as header:
         options["header-html"] = header.name
-        header.write(render_template(header_html, **kwargs).encode("utf-8"))
+        template_loader = jinja2.FileSystemLoader(searchpath="./assets")
+        template_env = jinja2.Environment(loader=template_loader)
+        header_template = template_env.get_template(header_html)
+        header.write(header_template.render(**kwargs).encode("utf-8"))
     return
 
 
@@ -32,27 +34,30 @@ def add_pdf_footer(footer_html, options, **kwargs):
         return
     with tempfile.NamedTemporaryFile(suffix=".html", delete=False) as footer:
         options["footer-html"] = footer.name
-        footer.write(render_template(footer_html, **kwargs).encode("utf-8"))
+        template_loader = jinja2.FileSystemLoader(searchpath="./assets")
+        template_env = jinja2.Environment(loader=template_loader)
+        footer_template = template_env.get_template(footer_html)
+        footer.write(footer_template.render(**kwargs).encode("utf-8"))
     return
 
 
 def generate_pdf(
-    template_file,
-    file_name,
-    header_html=None,
-    footer_html=None,
-    page_width="21cm",
-    page_height="29.7cm",
-    margin_top="2in",
-    margin_bottom="0.75in",
-    margin_x="0.75in",
-    **kwargs,
+        template_file,
+        file_name,
+        header_html=None,
+        footer_html=None,
+        page_width="21cm",
+        page_height="29.7cm",
+        margin_top="2in",
+        margin_bottom="0.75in",
+        margin_x="0.75in",
+        **kwargs,
 ):
     template_loader = jinja2.FileSystemLoader(searchpath="./assets")
     template_env = jinja2.Environment(loader=template_loader)
     template_env.filters["price"] = price
     main_template = template_env.get_template(template_file)
-    main_content = main_template.render(url_for=url_for, **kwargs)
+    main_content = main_template.render(**kwargs)
 
     file_path = f"{get_temp_path('./')}/{file_name}"
 
@@ -77,7 +82,6 @@ def generate_pdf(
     }
     add_pdf_header(header_html, options, **kwargs)
     add_pdf_footer(footer_html, options, **kwargs)
-
     configuration = (
         pdfkit.configuration(wkhtmltopdf="/opt/bin/wkhtmltopdf")
         if config.WKHTMLTOPDF_PATH
