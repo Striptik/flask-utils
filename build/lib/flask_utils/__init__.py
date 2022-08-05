@@ -20,7 +20,7 @@ from .ms_request import (
     reset_entity_cache,
 )
 from .pdf import generate_pdf, get_temp_path, remove_files
-from .repository import get_search_result
+from .repository import get_search_result, check_int
 from .resource import GenericResourceClass
 from .s3 import download_file, upload_file
 from .schema import NullableString
@@ -49,6 +49,7 @@ __all__ = (
     "log_error",
     "repository",
     "search_params",
+    "check_int",
     "resource",
     "redis_client",
     "get_cache",
