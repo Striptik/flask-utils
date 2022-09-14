@@ -46,7 +46,7 @@ def reset_entity_cache(_id: int, name):
         log_error(f"Failed to reset {name} {_id} in cache", {"_id": _id})
 
 
-def get_entity(host, _id: int, path, name, is_light=False):
+def get_entity(host, _id, path, name, is_light=False):
     try:
         query_params = "?isLight=true" if is_light else ""
         response = requests.get(f"{host}/api/{path}/{_id}{query_params}")

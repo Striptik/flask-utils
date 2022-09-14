@@ -8,3 +8,11 @@ def get_search_result(query, page, items_per_page, only_active=False):
         ),
         query.count(),
     )
+
+
+def check_int(search_term: str):
+    try:
+        int(search_term)
+        return True
+    except ValueError:
+        return False

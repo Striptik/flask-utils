@@ -1,6 +1,7 @@
 from datetime import datetime
 
 import pytz
+import dateutil.parser
 
 
 def get_now_in_timezone(timezone="Europe/Paris"):
@@ -24,3 +25,9 @@ def get_start_of_month():
 
 def get_start_of_day(date):
     return date.replace(hour=0, minute=0, second=0, microsecond=0)
+
+
+def parse_date(date_string):
+    if not date_string:
+        return datetime.now()
+    return dateutil.parser.isoparse(date_string)

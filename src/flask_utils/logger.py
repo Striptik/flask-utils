@@ -48,6 +48,6 @@ def log_error(error, metas=None):
     if config.DEBUG:
         click.echo(error)
     if metas is None:
-        get_logger().info(error)
+        get_logger().error(error)
     else:
         get_logger().error(error, metas)
