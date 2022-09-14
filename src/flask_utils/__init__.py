@@ -7,6 +7,7 @@ from .date import (
     get_start_and_end_of_today,
     get_start_of_day,
     get_start_of_month,
+    parse_date,
 )
 from .error_handler import handle_error, handle_not_found, handle_server_error
 from .filters import filter_not_none
@@ -67,6 +68,7 @@ __all__ = (
     "parse_dates_params",
     "parse_int_list",
     "parse_string_list",
+    "parse_date",
     "ms_request",
     "get_entity",
     "get_entities",
