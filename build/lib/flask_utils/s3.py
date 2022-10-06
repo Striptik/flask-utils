@@ -40,3 +40,14 @@ def download_file(s3_key, s3_secret, file_name, bucket):
         logging.error(e)
         return False
     return True
+
+
+def delete_file(s3_key, s3_secret, file_name=None, bucket=None):
+    if file_name is None and bucket is None:
+        return False
+    try:
+        s3_client(s3_key, s3_secret).delete_object(Bucket=bucket, Key=file_name)
+    except ClientError as e:
+        logging.error(e)
+        return False
+    return True
