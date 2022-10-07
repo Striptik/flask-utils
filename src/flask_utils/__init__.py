@@ -23,7 +23,7 @@ from .ms_request import (
 from .pdf import generate_pdf, get_temp_path, remove_files
 from .repository import get_search_result, check_int
 from .resource import GenericResourceClass
-from .s3 import download_file, upload_file
+from .s3 import download_file, upload_file, delete_file
 from .schema import NullableString
 from .search_params import (
     format_search_term,
@@ -82,6 +82,7 @@ __all__ = (
     "s3",
     "upload_file",
     "download_file",
+    "delete_file",
     "schema",
     "NullableString",
     "filters",
