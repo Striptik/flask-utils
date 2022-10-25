@@ -1,10 +1,12 @@
 Metadata-Version: 2.1
 Name: flask-utils
-Version: 1.1.1
+Version: 1.1.2
 Summary: Some flask utils
 Home-page: https://github.com/L-atelier-des-Chefs/flask-utils.git
 Author: atelier des chefs
 Author-email: dev@atelierdeschefs.com
+License: UNKNOWN
+Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
@@ -68,3 +70,5 @@ $ git tag -a vX.X.X -m "Version message"
 $ git push origin vX.X.X
 ```
 8. Finally, create a release on github (Code > Release> Draft a new Release) with the new tag, publish it, and merge the pull request
+
+

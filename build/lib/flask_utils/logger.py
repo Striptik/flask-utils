@@ -13,6 +13,8 @@ def get_logger():
         api_key=os.getenv("DATADOG_API_KEY", ""),
         raise_exception=False,
         service=os.getenv("DATADOG_SERVICE", ""),
+        host=os.getenv("DATADOG_HOST", ""),
+        source=os.getenv("DATADOG_SOURCE", ""),
         logger_name="main",
     ).logger
 
