@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from copy import copy
 from flask import request
 
@@ -45,7 +43,6 @@ class GenericResourceClass:
         for key, value in kwargs.items():
             entity_json[key] = value
         updated_entity = self.schema.load(entity_json)
-        updated_entity.updated_at = datetime.now()
         if validator is not None:
             validator.validate(updated_entity, existing_entity)
         self.repository.update(entity_id, updated_entity)
@@ -63,8 +60,6 @@ class GenericResourceClass:
         for key, value in kwargs.items():
             entity_json[key] = value
         new_entity = self.schema.load(entity_json)
-        new_entity.created_at = datetime.now()
-        new_entity.updated_at = datetime.now()
         if validator is not None:
             validator.validate(new_entity)
         created_entity = self.repository.create(new_entity)
