@@ -19,6 +19,7 @@ from .ms_request import (
     get_entity_cache,
     list_from_ids,
     reset_entity_cache,
+    log_request_details,
 )
 from .pdf import generate_pdf, get_temp_path, remove_files
 from .repository import get_search_result, check_int
@@ -75,6 +76,7 @@ __all__ = (
     "list_from_ids",
     "get_entity_cache",
     "reset_entity_cache",
+    "log_request_details"
     "pdf",
     "remove_files",
     "generate_pdf",

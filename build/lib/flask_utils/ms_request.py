@@ -1,10 +1,11 @@
+from flask import Response, g
 import json
 import os
 
 import requests
 
 from flask_utils.cache import del_cache, get_cache, set_cache
-from flask_utils.logger import log_error, log_exception
+from flask_utils.logger import log_error, log_exception, log_info
 
 
 def get_cache_key(name, _id, env, is_light=False):
@@ -76,3 +77,16 @@ def list_from_ids(host, ids, result_key, path, name):
 def get_entities(host, entities, id_key, result_key, path, name):
     ids = ",".join(str(getattr(entity, id_key)) for entity in entities)
     return list_from_ids(host, ids, result_key, path, name)
+
+
+def log_request_details(response: Response):
+    status = response.status
+    status_code = response.status_code
+    if g.method == "OPTIONS" or ((g.url or "").endswith("/ping")):
+        return response
+    metas = (dict(debug=True, method=g.method, url=g.url, status=status),)
+    log = {g.method} | {g.url} | {status}
+    log_error(f"MS ERROR - {log}", metas) if status_code >= 400 else log_info(
+        f"HTTP LOG - {log}", metas
+    )
+    return response
