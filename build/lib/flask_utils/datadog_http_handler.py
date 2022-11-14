@@ -1,4 +1,5 @@
 import logging
+import os
 from logging import StreamHandler
 
 from requests_futures.sessions import FuturesSession
@@ -15,11 +16,13 @@ class Singleton(type):
 
 class DatadogHttpHandler:
     def __init__(
-        self, api_key, service, logger_name="", level=None, raise_exception=False
+        self, api_key, service, host, source, logger_name="", level=None, raise_exception=False
     ):
 
         self.api_key = api_key
         self.service = service
+        self.host = host
+        self.source = source
         self.raise_exception = raise_exception
         self.setup_logger(logger_name, level)
 
@@ -33,16 +36,19 @@ class DatadogHttpHandler:
 
     def setup_handler(self, level):
         handler = DataDogHandler(
-            self.api_key, self.service, raise_exception=self.raise_exception
+            self.api_key, service=self.service, host=self.host, source=self.source, raise_exception=self.raise_exception
         )
         handler.setLevel(level)
         return handler
 
 
 class DataDogHandler(StreamHandler):
-    def __init__(self, api_key, service, raise_exception=False):
+    def __init__(self, api_key, service, host, source, raise_exception=False):
         StreamHandler.__init__(self)
+        self.source = source
         self.service = service
+        self.host = host
+        self.env = os.getenv("ENVIRONMENT", "dev")
         self.raise_exception = raise_exception
         self.headers = {"Content-Type": "application/json"}
         self.url = "https://browser-http-intake.logs.datadoghq.eu/v1/input/" + api_key
@@ -55,8 +61,10 @@ class DataDogHandler(StreamHandler):
         }
         if self.service:
             payload["service"] = self.service
-            payload["hostname"] = self.service
-            payload["ddsource"] = self.service
+            payload["hostname"] = self.host
+            payload["ddsource"] = self.source
+            payload["env"] = self.env
+
 
         session = FuturesSession()
         try:
