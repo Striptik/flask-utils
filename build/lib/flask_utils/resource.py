@@ -83,6 +83,10 @@ class GenericResourceClass:
         result = {"count": count, self.result_key: self.list_schema.dump(entities)}
         return result
 
+    def list(self, **kwargs):
+        entities = self.repository.list(**kwargs)
+        return self.list_schema.dump(entities)
+
     def log_entity_change(self, entity_id, entity_name, new_entity, action):
         username = request.headers.get("username", default="")
         logger.log_info(
