@@ -28,7 +28,27 @@ class MetaBaseModel(db.Model.__class__):
         return alias
 
 
-class BaseModel:
+class BaseMixin(object):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    created_at = db.Column(db.DateTime)
+    updated_at = db.Column(db.DateTime)
+
+
+class BaseModel(db.Model):
+    __abstract__ = True
+
+    @classmethod
+    def _all_subclasses(cls):
+        children = cls.__subclasses__()
+        result = []
+        while children:
+            next = children.pop()
+            subclasses = next.__subclasses__()
+            result.append(next)
+            for subclass in subclasses:
+                children.append(subclass)
+        return result
+
     def __repr__(self):
         return self.repr()
 
