@@ -84,9 +84,9 @@ def log_request_details(response: Response):
     status_code = response.status_code
     if g.method == "OPTIONS" or ((g.url or "").endswith("/ping")):
         return response
-    metas = (dict(debug=True, method=g.method, url=g.url, status=status),)
+    metas = dict(debug=True, method=g.method, url=g.url, status=status)
     log = {g.method} | {g.url} | {status}
-    log_error(f"MS ERROR - {log}", metas) if status_code >= 400 else log_info(
+    log_error(f"HTTP LOG - {log}", metas) if status_code >= 400 else log_info(
         f"HTTP LOG - {log}", metas
     )
     return response
